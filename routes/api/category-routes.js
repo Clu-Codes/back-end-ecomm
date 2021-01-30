@@ -10,8 +10,8 @@ router.get('/', (req, res) => {
       model: Product,
       attributes: ['id', 'product_name', 'price', 'stock', 'category_id']
     }
-  }).then(categroyData => {
-    res.json(categroyData);
+  }).then(categoryData => {
+    res.json(categoryData);
   }).catch(err => {
     console.log(err);
     return res.status(500).json(err);
@@ -27,8 +27,8 @@ router.get('/:id', (req, res) => {
     where: {
       id: req.params.id
     }
-  }).then(categroyData => {
-    res.json(categroyData);
+  }).then(categoryData => {
+    res.json(categoryData);
   }).catch(err => {
     console.log(err);
     return res.status(500).json(err);
@@ -38,8 +38,8 @@ router.get('/:id', (req, res) => {
 router.post('/', (req, res) => {
   Category.create({
     category_name: req.body.category_name
-  }).then(categroyData => {
-    return res.json(categroyData);
+  }).then(categoryData => {
+    return res.json(categoryData);
   }).catch(err => {
     console.log(err);
     return res.status(500).json(err);
@@ -56,11 +56,11 @@ router.put('/:id', (req, res) => {
         id: req.params.id
       }
     }
-  ).then(categroyData => {
-    if (!categroyData) {
+  ).then(categoryData => {
+    if (!categoryData) {
       res.status(404).json({ message: 'No category with that id exists! '})
     }
-    return res.json(categroyData);
+    return res.json(categoryData);
   }).catch(err => {
     console.log(err);
     return res.status(500).json(err);
@@ -72,8 +72,8 @@ router.delete('/:id', (req, res) => {
     where: {
       id: req.params.id
     }
-  }).then(categroyData => {
-    return res.json(categroyData);
+  }).then(categoryData => {
+    return res.json(categoryData);
   }).catch(err => {
     console.log(err);
     return res.status(500).json(err);
