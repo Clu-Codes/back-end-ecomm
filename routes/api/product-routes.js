@@ -78,7 +78,6 @@ router.post('/', (req, res) => {
         return ProductTag.bulkCreate(productTagIdArr);
       }
       // if no product tags, just respond
-      console.log('===============', 2)
       res.status(200).json(product);
     })
     .then((productTagIds) => res.status(200).json(productTagIds))
@@ -90,6 +89,7 @@ router.post('/', (req, res) => {
 
 // update product
 router.put('/:id', (req, res) => {
+  console.log(req.body)
   // update product data
   Product.update(req.body, {
     where: {
@@ -114,16 +114,20 @@ router.put('/:id', (req, res) => {
         });
       // figure out which ones to remove
       const productTagsToRemove = productTags
-        .filter(({ tag_id }) => !req.body.tagIds.includes(tag_id))
+        .filter(({ tag_id }) => {
+          return !req.body.tagIds.includes(tag_id)
+        })
         .map(({ id }) => id);
-
       // run both actions
       return Promise.all([
         ProductTag.destroy({ where: { id: productTagsToRemove } }),
         ProductTag.bulkCreate(newProductTags),
       ]);
     })
-    .then((updatedProductTags) => res.json(updatedProductTags))
+    .then((updatedProductTags) => {
+      console.log('====== UPDATED ======')
+      res.json(updatedProductTags)
+  }) 
     .catch((err) => {
       // console.log(err);
       res.status(400).json(err);
