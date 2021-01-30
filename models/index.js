@@ -18,7 +18,9 @@ Product.belongsToMany(Tag, {
   through: ProductTag
 });
 
-Tag.belongsToMany(Product);
+Tag.belongsToMany(Product, {
+  through: ProductTag
+});
 // Product.belongsToMany(Tag, {
 
 // })
